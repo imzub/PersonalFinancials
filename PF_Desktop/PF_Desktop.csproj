@@ -1,0 +1,299 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{E3625A95-9980-4DD9-A766-6377BA76DDE5}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>PF_Desktop</RootNamespace>
+    <AssemblyName>PF_Desktop</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="HtmlAgilityPack, Version=1.12.0.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
+      <HintPath>..\packages\HtmlAgilityPack.1.12.0\lib\Net45\HtmlAgilityPack.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Messaging" />
+    <Reference Include="System.Windows.Forms.DataVisualization" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Assets\AssetHistoryForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Assets\AssetHistoryForm.Designer.cs">
+      <DependentUpon>AssetHistoryForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Assets\AssetTypeForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Assets\AssetTypeForm.Designer.cs">
+      <DependentUpon>AssetTypeForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Assets\ViewAssets.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Assets\ViewAssets.Designer.cs">
+      <DependentUpon>ViewAssets.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Assets\New Asset.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Assets\New Asset.Designer.cs">
+      <DependentUpon>New Asset.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Assets\ViewAssetTypeForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Assets\ViewAssetTypeForm.Designer.cs">
+      <DependentUpon>ViewAssetTypeForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ClassLib\AssetControlsEvents.cs" />
+    <Compile Include="ClassLib\AutomatedProcess.cs" />
+    <Compile Include="ClassLib\ConfigHelper.cs" />
+    <Compile Include="ClassLib\Tasks.cs" />
+    <Compile Include="Common\ApplicationTasks.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Common\ApplicationTasks.Designer.cs">
+      <DependentUpon>ApplicationTasks.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Common\AssetDueZakatSetoff.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Common\AssetDueZakatSetoff.Designer.cs">
+      <DependentUpon>AssetDueZakatSetoff.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Common\SettingExportImportForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Common\SettingExportImportForm.Designer.cs">
+      <DependentUpon>SettingExportImportForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Common\Settings.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Common\Settings.Designer.cs">
+      <DependentUpon>Settings.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Common\ZakatTransfer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Common\ZakatTransfer.Designer.cs">
+      <DependentUpon>ZakatTransfer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PFHome.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PFHome.Designer.cs">
+      <DependentUpon>PFHome.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Reports\AssetsDiversificationForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Reports\AssetsDiversificationForm.Designer.cs">
+      <DependentUpon>AssetsDiversificationForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="User\AddNewUser.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="User\AddNewUser.Designer.cs">
+      <DependentUpon>AddNewUser.cs</DependentUpon>
+    </Compile>
+    <Compile Include="User\Users.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="User\Users.Designer.cs">
+      <DependentUpon>Users.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Zakat\AddAdvanceZakatPaidForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Zakat\AddAdvanceZakatPaidForm.Designer.cs">
+      <DependentUpon>AddAdvanceZakatPaidForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Zakat\AddZakatDueForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Zakat\AddZakatDueForm.Designer.cs">
+      <DependentUpon>AddZakatDueForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Zakat\AssetZakat.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Zakat\AssetZakat.Designer.cs">
+      <DependentUpon>AssetZakat.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Zakat\PayAdvanceZakat.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Zakat\PayAdvanceZakat.Designer.cs">
+      <DependentUpon>PayAdvanceZakat.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Zakat\ViewAdvanceZakatPaidForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Zakat\ViewAdvanceZakatPaidForm.Designer.cs">
+      <DependentUpon>ViewAdvanceZakatPaidForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Zakat\ViewAssetZakat.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Zakat\ViewAssetZakat.Designer.cs">
+      <DependentUpon>ViewAssetZakat.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Zakat\ViewZakatDueForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Zakat\ViewZakatDueForm.Designer.cs">
+      <DependentUpon>ViewZakatDueForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Zakat\ViewZakatPaidForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Zakat\ViewZakatPaidForm.Designer.cs">
+      <DependentUpon>ViewZakatPaidForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Zakat\ZakatHistory.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Zakat\ZakatHistory.Designer.cs">
+      <DependentUpon>ZakatHistory.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Zakat\AddZakatPaidForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Zakat\AddZakatPaidForm.Designer.cs">
+      <DependentUpon>AddZakatPaidForm.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="Assets\AssetHistoryForm.resx">
+      <DependentUpon>AssetHistoryForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Assets\AssetTypeForm.resx">
+      <DependentUpon>AssetTypeForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Assets\ViewAssets.resx">
+      <DependentUpon>ViewAssets.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Assets\New Asset.resx">
+      <DependentUpon>New Asset.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Assets\ViewAssetTypeForm.resx">
+      <DependentUpon>ViewAssetTypeForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Common\ApplicationTasks.resx">
+      <DependentUpon>ApplicationTasks.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Common\AssetDueZakatSetoff.resx">
+      <DependentUpon>AssetDueZakatSetoff.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Common\SettingExportImportForm.resx">
+      <DependentUpon>SettingExportImportForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Common\Settings.resx">
+      <DependentUpon>Settings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Common\ZakatTransfer.resx">
+      <DependentUpon>ZakatTransfer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PFHome.resx">
+      <DependentUpon>PFHome.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="Reports\AssetsDiversificationForm.resx">
+      <DependentUpon>AssetsDiversificationForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Zakat\AddAdvanceZakatPaidForm.resx">
+      <DependentUpon>AddAdvanceZakatPaidForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Zakat\AddZakatDueForm.resx">
+      <DependentUpon>AddZakatDueForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Zakat\AssetZakat.resx">
+      <DependentUpon>AssetZakat.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Zakat\PayAdvanceZakat.resx">
+      <DependentUpon>PayAdvanceZakat.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Zakat\ViewAdvanceZakatPaidForm.resx">
+      <DependentUpon>ViewAdvanceZakatPaidForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Zakat\ViewAssetZakat.resx">
+      <DependentUpon>ViewAssetZakat.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Zakat\AddZakatPaidForm.resx">
+      <DependentUpon>AddZakatPaidForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Zakat\ViewZakatDueForm.resx">
+      <DependentUpon>ViewZakatDueForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Zakat\ViewZakatPaidForm.resx">
+      <DependentUpon>ViewZakatPaidForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PF_ClassLibrary\PF_ClassLibrary.csproj">
+      <Project>{459d48a2-f777-4f2a-95f4-0846ce00b1b1}</Project>
+      <Name>PF_ClassLibrary</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

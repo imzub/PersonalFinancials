@@ -1,0 +1,96 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <Name>PFDB_SQL</Name>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectVersion>4.1</ProjectVersion>
+    <ProjectGuid>{e7c94a4a-0706-4371-b832-5cb5abb8a25a}</ProjectGuid>
+    <DSP>Microsoft.Data.Tools.Schema.Sql.Sql160DatabaseSchemaProvider</DSP>
+    <OutputType>Database</OutputType>
+    <RootPath>
+    </RootPath>
+    <RootNamespace>PFDB_SQL</RootNamespace>
+    <AssemblyName>PFDB_SQL</AssemblyName>
+    <ModelCollation>1033, CI</ModelCollation>
+    <DefaultFileStructure>BySchemaAndSchemaType</DefaultFileStructure>
+    <DeployToDatabase>True</DeployToDatabase>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <TargetLanguage>CS</TargetLanguage>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <SqlServerVerification>False</SqlServerVerification>
+    <IncludeCompositeObjects>True</IncludeCompositeObjects>
+    <TargetDatabaseSet>True</TargetDatabaseSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">11.0</VisualStudioVersion>
+    <!-- Default to the v11.0 targets path if the targets file for the current VS version is not found -->
+    <SSDTExists Condition="Exists('$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets')">True</SSDTExists>
+    <VisualStudioVersion Condition="'$(SSDTExists)' == ''">11.0</VisualStudioVersion>
+  </PropertyGroup>
+  <Import Condition="'$(SQLDBExtensionsRefPath)' != ''" Project="$(SQLDBExtensionsRefPath)\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
+  <Import Condition="'$(SQLDBExtensionsRefPath)' == ''" Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
+  <ItemGroup>
+    <Folder Include="Properties" />
+    <Folder Include="dbo\" />
+    <Folder Include="dbo\Tables\" />
+    <Folder Include="Snapshots" />
+    <Folder Include="dbo\Stored Procedure" />
+  </ItemGroup>
+  <ItemGroup>
+    <Build Include="dbo\Tables\tbl_Users.sql" />
+    <Build Include="dbo\Tables\tbl_AssetType.sql" />
+    <Build Include="dbo\Tables\tbl_Assets.sql" />
+    <Build Include="dbo\Tables\tbl_ZakatDue.sql" />
+    <Build Include="dbo\Tables\tbl_ZakatPaid.sql" />
+    <Build Include="dbo\Tables\tbl_YearType.sql" />
+    <Build Include="dbo\Tables\tbl_FinancialYear.sql" />
+    <Build Include="dbo\Tables\tbl_AssetZakatFinYear.sql" />
+    <Build Include="dbo\Tables\tbl_AssetHistory.sql" />
+    <Build Include="dbo\Tables\tbl_ZakatHistory.sql" />
+    <Build Include="dbo\Stored Procedure\sp_GetAllAssets.sql" />
+    <Build Include="dbo\Stored Procedure\GetAssetListForZakatFinYear.sql" />
+    <Build Include="dbo\Stored Procedure\GetAssetsNotInZakatFinYear.sql" />
+    <Build Include="dbo\Tables\tbl_ApplicationConfiguration.sql" />
+    <Build Include="dbo\Stored Procedure\GetAssetsNotInZakatFinYearWithDetails.sql" />
+    <Build Include="dbo\Tables\tbl_AssetZakatPaid.sql" />
+    <Build Include="dbo\Tables\tbl_ExceptionLog.sql" />
+    <Build Include="dbo\Tables\tbl_AdvanceZakat.sql" />
+    <Build Include="dbo\Stored Procedure\sp_SearchZakatDue.sql" />
+    <Build Include="dbo\Stored Procedure\sp_GetAssetCategorySum.sql" />
+    <Build Include="dbo\Stored Procedure\GetZakatSummary.sql" />
+    <Build Include="dbo\Tables\tbl_EventLog.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="PFDB_SQL.publish.xml" />
+    <None Include="Snapshots\PFDB_SQL_20250228_02-49-58.dacpac" />
+    <None Include="PFDB_SQL_PROD.publish.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <RefactorLog Include="PFDB_SQL.refactorlog" />
+  </ItemGroup>
+</Project>
