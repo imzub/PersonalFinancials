@@ -1,9 +1,10 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using PersonalFinancials.DataAccess;
 using PF_ClassLibrary.Model;
+using PersonalFinancials.Models;
 
 namespace PF_ClassLibrary.DataAccess
 {
