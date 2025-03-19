@@ -5,6 +5,7 @@ using System.Data.SqlClient;
 using PF_ClassLibrary.Model;
 using PF_ClassLibrary.Common;
 using PersonalFinancials.Models;
+using PersonalFinancials.DataAccess;
 
 namespace PF_ClassLibrary.DataAccess
 {

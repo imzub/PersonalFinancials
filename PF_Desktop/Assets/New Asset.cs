@@ -5,6 +5,7 @@ using PersonalFinancials.DataAccess;
 using PF_ClassLibrary.DataAccess;
 using PF_ClassLibrary.Model;
 using PersonalFinancials.Models;
+using PF_Desktop.ClassLib;
 
 namespace PF_Desktop.Assets
 {
