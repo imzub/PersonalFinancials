@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Data.SqlClient;
 using System.Drawing;
 using System.Runtime.InteropServices;
@@ -13,6 +13,7 @@ using PersonalFinancials.DataAccess;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Net.Http.Headers;
+using PersonalFinancials.Models;
 
 namespace PF_Desktop
 {
