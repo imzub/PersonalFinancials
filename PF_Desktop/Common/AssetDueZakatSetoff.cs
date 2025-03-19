@@ -18,6 +18,8 @@ namespace PF_Desktop.Common
         ZakatDueDataAccess _zakatDueDataAccess;
         AdvanceZakatDataAccess _advanceZakatDataAccess;
         decimal advZakatBal;
+        EventLogDataAccess eventLogger = new EventLogDataAccess();
+
         public AssetDueZakatSetoff()
         {
             InitializeComponent();
@@ -96,8 +98,6 @@ namespace PF_Desktop.Common
 
                 bool success = zakatDataAccess.SetoffAdvanceZakat(advanceZakat);
 
-
-
                 if (success)
                 {
                     MessageBox.Show("Zakat payment processed successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -106,6 +106,13 @@ namespace PF_Desktop.Common
                     GetAdvanceZakatBalance();                    
                     PFHome.Instance?.LoadZakatSummery();
 
+                    eventLogger.LogEvent(new EventLogModel
+                    {
+                        EventType = "Setoff",
+                        EventMessage = "Zakat payment processed successfully.",
+                        EventSource = "AssetDueZakatSetoff",
+                        UserName = "System"
+                    });
                 }
                 else
                 {

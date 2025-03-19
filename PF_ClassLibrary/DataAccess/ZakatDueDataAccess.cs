@@ -12,6 +12,8 @@ namespace PersonalFinancials.DataAccess
         AssetZakatFinYearDataAccess _assetZakatFinYearDataAccess;
         AssetZakatFinYear _assetZakatFinYear;
         ExceptionLogDataAccess logger;
+        EventLogDataAccess eventLogger = new EventLogDataAccess();
+
         public void AddZakatDue(ZakatDue zakatDue)
         {
             string query = "INSERT INTO tbl_ZakatDue (zakatDueId, assetId, DueZakat, isZakatDueActive) " +
@@ -26,6 +28,14 @@ namespace PersonalFinancials.DataAccess
             };
 
             ExecuteNonQuery(query, parameters);
+
+            eventLogger.LogEvent(new EventLogModel
+            {
+                EventType = "Insert",
+                EventMessage = "Zakat Due added successfully.",
+                EventSource = "ZakatDueDataAccess",
+                UserName = "System"
+            });
         }
 
         public List<ZakatDue> GetAllZakatDues()
@@ -151,6 +161,15 @@ namespace PersonalFinancials.DataAccess
 
                     // 🔹 Step 7: Commit Transaction if everything is successful
                     transaction.Commit();
+
+                    eventLogger.LogEvent(new EventLogModel
+                    {
+                        EventType = "Process",
+                        EventMessage = "Zakat Due processed and saved successfully.",
+                        EventSource = "ZakatDueDataAccess",
+                        UserName = "System"
+                    });
+
                     return true;
                 }
                 catch (Exception ex)

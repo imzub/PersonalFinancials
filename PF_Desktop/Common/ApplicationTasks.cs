@@ -22,6 +22,8 @@ namespace PF_Desktop.Common
         MetalServices metalService;
         MutualFundService mutualFundService;
         StockService stockService;
+        EventLogDataAccess eventLogger = new EventLogDataAccess();
+
         public ApplicationTasks()
         {
             InitializeComponent();
@@ -35,9 +37,15 @@ namespace PF_Desktop.Common
         {
             _tasks.UpdateAssetZakat();
             UpdateKeyAndLableLastTimeUpdated(AppKey.KeyUpdateAssetZakat);
+
+            eventLogger.LogEvent(new EventLogModel
+            {
+                EventType = "Update",
+                EventMessage = "Asset Zakat updated successfully.",
+                EventSource = "ApplicationTasks",
+                UserName = "System"
+            });
         }
-
-
 
         private bool UpdateKeys(string appKey)
         {
@@ -55,6 +63,14 @@ namespace PF_Desktop.Common
         {
             UpdateAllAssetTypeRates();
             UpdateZakatDue();
+
+            eventLogger.LogEvent(new EventLogModel
+            {
+                EventType = "Update",
+                EventMessage = "Zakat Due updated successfully.",
+                EventSource = "ApplicationTasks",
+                UserName = "System"
+            });
         }
 
         private void UpdateZakatDue()
@@ -71,15 +87,29 @@ namespace PF_Desktop.Common
         {
             ZakatTransfer zakatTransfer = new ZakatTransfer();
             zakatTransfer.ShowDialog();
+
+            eventLogger.LogEvent(new EventLogModel
+            {
+                EventType = "Transfer",
+                EventMessage = "Zakat transfer initiated.",
+                EventSource = "ApplicationTasks",
+                UserName = "System"
+            });
         }
 
         private void btn_UpdateZakatDueAssetZakat_Click(object sender, EventArgs e)
         {
             _tasks.UpdateAssetZakat();
             UpdateKeyAndLableLastTimeUpdated(AppKey.KeyUpdateAssetZakat);
-            //_zakatDueDataAccess.ProcessAndSaveZakatDue();
-            //UpdateKeyAndLableLastTimeUpdated(AppKey.KeyUpdateZakatDues);
             UpdateZakatDue();
+
+            eventLogger.LogEvent(new EventLogModel
+            {
+                EventType = "Update",
+                EventMessage = "Zakat Due and Asset Zakat updated successfully.",
+                EventSource = "ApplicationTasks",
+                UserName = "System"
+            });
         }
 
         private void UpdateKeyAndLableLastTimeUpdated(string appKey)
@@ -90,15 +120,12 @@ namespace PF_Desktop.Common
 
         private void UpdateLastUpdatedLabel(string appKey)
         {
-            // 🔹 Fetch configuration for the given key
             ApplicationConfiguration config = _applicationConfigurationDataAccess.GetConfigurationByKey(appKey);
 
-            // 🔹 Determine which label to update
             string lastUpdatedText = (config != null && !string.IsNullOrEmpty(config.AppKeyValue))
                 ? "Last updated on " + config.AppKeyValue
                 : "Last updated on: Not Available";
 
-            // 🔹 Use switch to update the correct label
             switch (appKey)
             {
                 case AppKey.KeyUpdateAssetZakat:
@@ -122,7 +149,6 @@ namespace PF_Desktop.Common
                     break;
 
                 default:
-                    // Optional: Handle unknown keys (log warning, throw exception, etc.)
                     Console.WriteLine($"Warning: Unrecognized key '{appKey}' passed to UpdateLastUpdatedLabel.");
                     break;
             }
@@ -136,6 +162,14 @@ namespace PF_Desktop.Common
                 await metalService.UpdateMetalRatesAsync();
                 MessageBox.Show("Metal rates updated successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 UpdateKeyAndLableLastTimeUpdated(AppKey.KeyUpdateMetalRate);
+
+                eventLogger.LogEvent(new EventLogModel
+                {
+                    EventType = "Update",
+                    EventMessage = "Metal rates updated successfully.",
+                    EventSource = "ApplicationTasks",
+                    UserName = "System"
+                });
             }
             catch (Exception ex)
             {
@@ -160,6 +194,14 @@ namespace PF_Desktop.Common
                 await stockService.UpdateCIL();
                 MessageBox.Show("Stocks rates updated successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 UpdateKeyAndLableLastTimeUpdated(AppKey.KeyUpdateStockRate);
+
+                eventLogger.LogEvent(new EventLogModel
+                {
+                    EventType = "Update",
+                    EventMessage = "Stocks rates updated successfully.",
+                    EventSource = "ApplicationTasks",
+                    UserName = "System"
+                });
             }
             catch (Exception ex)
             {
@@ -175,6 +217,14 @@ namespace PF_Desktop.Common
                 await mutualFundService.UpdateMFRates();
                 MessageBox.Show("MF rates updated successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 UpdateKeyAndLableLastTimeUpdated(AppKey.KeyUpdateMFRate);
+
+                eventLogger.LogEvent(new EventLogModel
+                {
+                    EventType = "Update",
+                    EventMessage = "MF rates updated successfully.",
+                    EventSource = "ApplicationTasks",
+                    UserName = "System"
+                });
             }
             catch (Exception ex)
             {
