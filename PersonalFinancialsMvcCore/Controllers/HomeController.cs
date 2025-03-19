@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using PersonalFinancialsMvcCore.Models;
 using System.Diagnostics;
 using PersonalFinancials.DataAccess;
+using PersonalFinancials.Models;
 
 namespace PersonalFinancialsMvcCore.Controllers
 {

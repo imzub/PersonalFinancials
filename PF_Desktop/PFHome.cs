@@ -1,18 +1,18 @@
-﻿using PF_ClassLibrary.Model;
+﻿using System;
+using System.Data.SqlClient;
+using System.Drawing;
+using System.Runtime.InteropServices;
+using System.Windows.Forms;
+using PF_ClassLibrary.Model;
 using PF_ClassLibrary.Services;
 using PF_Desktop.Assets;
 using PF_Desktop.Common;
 using PF_Desktop.Reports;
 using PF_Desktop.Zakat;
-using System;
-using System.Data.SqlClient;
-using System.Drawing;
-using System.Runtime.InteropServices;
-using System.Windows.Forms;
+using PersonalFinancials.DataAccess;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Net.Http.Headers;
-using PersonalFinancials.DataAccess;
 
 namespace PF_Desktop
 {
@@ -21,7 +21,7 @@ namespace PF_Desktop
         public static PFHome Instance { get; private set; }
 
         Calculations _calculations;
-        EventLogDataAccess eventLogDataAccess =  new EventLogDataAccess();
+        EventLogDataAccess eventLogDataAccess = new EventLogDataAccess();
         ExceptionLogDataAccess exceptionLogDataAccess = new ExceptionLogDataAccess();
 
         public PFHome()
