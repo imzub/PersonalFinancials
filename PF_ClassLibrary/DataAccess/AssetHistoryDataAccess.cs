@@ -11,6 +11,7 @@ namespace PF_ClassLibrary.DataAccess
     {
         private AssetHistory _assetHistory;
         ExceptionLogDataAccess logger;
+        EventLogDataAccess eventLogger = new EventLogDataAccess();
 
         // 🔹 Get All Asset History Records
         public List<AssetHistory> GetAllAssetHistory()
@@ -58,6 +59,18 @@ namespace PF_ClassLibrary.DataAccess
 
                 conn.Open();
                 int rowsAffected = cmd.ExecuteNonQuery();
+
+                if (rowsAffected > 0)
+                {
+                    eventLogger.LogEvent(new EventLogModel
+                    {
+                        EventType = "Insert",
+                        EventMessage = "Asset history inserted successfully.",
+                        EventSource = "AssetHistoryDataAccess",
+                        UserName = "System"
+                    });
+                }
+
                 return rowsAffected > 0;
             }
         }
@@ -74,6 +87,18 @@ namespace PF_ClassLibrary.DataAccess
 
                 conn.Open();
                 int rowsAffected = cmd.ExecuteNonQuery();
+
+                if (rowsAffected > 0)
+                {
+                    eventLogger.LogEvent(new EventLogModel
+                    {
+                        EventType = "Delete",
+                        EventMessage = "Asset history deleted successfully.",
+                        EventSource = "AssetHistoryDataAccess",
+                        UserName = "System"
+                    });
+                }
+
                 return rowsAffected > 0;
             }
         }
@@ -90,6 +115,18 @@ namespace PF_ClassLibrary.DataAccess
 
                 conn.Open();
                 int rowsAffected = cmd.ExecuteNonQuery();
+
+                if (rowsAffected > 0)
+                {
+                    eventLogger.LogEvent(new EventLogModel
+                    {
+                        EventType = "Delete",
+                        EventMessage = "Asset history deleted successfully by asset ID.",
+                        EventSource = "AssetHistoryDataAccess",
+                        UserName = "System"
+                    });
+                }
+
                 return rowsAffected > 0;
             }
         }
@@ -123,6 +160,18 @@ namespace PF_ClassLibrary.DataAccess
                     insertCmd.Parameters.AddWithValue("@AssetNewValue", newValues);
 
                     int rowsAffected = insertCmd.ExecuteNonQuery();
+
+                    if (rowsAffected > 0)
+                    {
+                        eventLogger.LogEvent(new EventLogModel
+                        {
+                            EventType = "InsertOrUpdate",
+                            EventMessage = "Asset history logged successfully.",
+                            EventSource = "AssetHistoryDataAccess",
+                            UserName = "System"
+                        });
+                    }
+
                     return rowsAffected > 0;
                 }
             }

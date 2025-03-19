@@ -9,6 +9,8 @@ namespace PF_ClassLibrary.DataAccess
 {
     public class AdvanceZakatDataAccess : BaseDataAccess
     {
+        private EventLogDataAccess eventLogger = new EventLogDataAccess();
+
         // Insert Advance Zakat
         public bool InsertAdvanceZakat(AdvanceZakat zakat)
         {
@@ -32,7 +34,20 @@ namespace PF_ClassLibrary.DataAccess
                 new SqlParameter("@Timestamp", (object)zakat.Timestamp ?? DBNull.Value)
             };
 
-            return ExecuteNonQuery(query, parameters) > 0;
+            bool result = ExecuteNonQuery(query, parameters) > 0;
+
+            if (result)
+            {
+                eventLogger.LogEvent(new EventLogModel
+                {
+                    EventType = "Insert",
+                    EventMessage = "Advance Zakat inserted successfully.",
+                    EventSource = "AdvanceZakatDataAccess",
+                    UserName = "System"
+                });
+            }
+
+            return result;
         }
 
         // Update Advance Zakat
@@ -59,7 +74,20 @@ namespace PF_ClassLibrary.DataAccess
                 new SqlParameter("@Timestamp", (object)zakat.Timestamp ?? DBNull.Value)
             };
 
-            return ExecuteNonQuery(query, parameters) > 0;
+            bool result = ExecuteNonQuery(query, parameters) > 0;
+
+            if (result)
+            {
+                eventLogger.LogEvent(new EventLogModel
+                {
+                    EventType = "Update",
+                    EventMessage = "Advance Zakat updated successfully.",
+                    EventSource = "AdvanceZakatDataAccess",
+                    UserName = "System"
+                });
+            }
+
+            return result;
         }
 
         // Delete Advance Zakat
@@ -72,7 +100,20 @@ namespace PF_ClassLibrary.DataAccess
                 new SqlParameter("@AdvZakatId", advZakatId)
             };
 
-            return ExecuteNonQuery(query, parameters) > 0;
+            bool result = ExecuteNonQuery(query, parameters) > 0;
+
+            if (result)
+            {
+                eventLogger.LogEvent(new EventLogModel
+                {
+                    EventType = "Delete",
+                    EventMessage = "Advance Zakat deleted successfully.",
+                    EventSource = "AdvanceZakatDataAccess",
+                    UserName = "System"
+                });
+            }
+
+            return result;
         }
 
         // Get Advance Zakat by ID
@@ -129,54 +170,6 @@ namespace PF_ClassLibrary.DataAccess
             };
         }
 
-        //    public bool PayAdvanceZakat(AdvanceZakat zakat)
-        //    {
-        //        // Calculate updated Advance Zakat Balance
-        //        decimal updatedAdvZakatBalance = GetAdvanceZakatBalance() + zakat.AdvZakatIn;
-
-        //        string query = @"
-        //            INSERT INTO tbl_AdvanceZakat 
-        //            (advZakatIn, advZakatOut, advZakatBalance, assetId, advZakatPaidTo, advZakatPaidDate, 
-        //             isAdvZakatPaid, isActive, comments) 
-        //            VALUES 
-        //            (@AdvZakatIn, 0, @AdvZakatBalance, @AssetId, @AdvZakatPaidTo, 
-        //             @AdvZakatPaidDate, @IsAdvZakatPaid, @IsActive, @Comments);
-
-        //            SELECT SCOPE_IDENTITY();"; // Retrieves the last inserted ID
-
-        //        SqlParameter[] parameters =
-        //        {
-        //    new SqlParameter("@AdvZakatIn", zakat.AdvZakatIn),        
-        //    new SqlParameter("@AdvZakatBalance", updatedAdvZakatBalance),
-        //    new SqlParameter("@AssetId", zakat.AssetId ?? (object)DBNull.Value),
-        //    new SqlParameter("@AdvZakatPaidTo", (object)zakat.AdvZakatPaidTo ?? DBNull.Value),
-        //    new SqlParameter("@AdvZakatPaidDate", zakat.AdvZakatPaidDate),
-        //    new SqlParameter("@IsAdvZakatPaid", true),
-        //    new SqlParameter("@IsActive", true), // The newly inserted record is active
-        //    new SqlParameter("@Comments", (object)zakat.Comments ?? DBNull.Value)
-        //};
-
-        //        // Use ExecuteScalar to get the newly inserted ID
-        //        object result = ExecuteScalar(query, parameters);
-
-        //        if (result != null && int.TryParse(result.ToString(), out int newAdvZakatId))
-        //        {
-        //            // **Deactivate Previous Active Advance Zakat Record**
-        //            string updatePreviousQuery = @"
-        //            UPDATE tbl_AdvanceZakat 
-        //            SET isActive = 0 
-        //            WHERE advZakatId < @NewAdvZakatId AND isActive = 1"; // Deactivate old active records
-
-        //            SqlParameter[] updateParams =
-        //            {
-        //        new SqlParameter("@NewAdvZakatId", newAdvZakatId)
-        //    };
-
-        //            return ExecuteNonQuery(updatePreviousQuery, updateParams) > 0;
-        //        }
-        //        return false;
-        //    }
-
         public bool PayAdvanceZakat(AdvanceZakat zakat)
         {
             using (SqlConnection conn = new SqlConnection(ConnectionStringHelper.GetConnectionString()))
@@ -231,6 +224,15 @@ namespace PF_ClassLibrary.DataAccess
 
                         // 🔹 Step 4: Commit Transaction (Success)
                         transaction.Commit();
+
+                        eventLogger.LogEvent(new EventLogModel
+                        {
+                            EventType = "Pay",
+                            EventMessage = "Advance Zakat paid successfully.",
+                            EventSource = "AdvanceZakatDataAccess",
+                            UserName = "System"
+                        });
+
                         return true;
                     }
                     else
@@ -252,7 +254,6 @@ namespace PF_ClassLibrary.DataAccess
                 }
             }
         }
-
 
         public decimal GetAdvanceZakatBalance()
         {
@@ -324,6 +325,15 @@ namespace PF_ClassLibrary.DataAccess
                             updateZakatDueCmd.ExecuteNonQuery();
 
                             transaction.Commit(); // ✅ Commit Transaction
+
+                            eventLogger.LogEvent(new EventLogModel
+                            {
+                                EventType = "Setoff",
+                                EventMessage = "Advance Zakat setoff successfully.",
+                                EventSource = "AdvanceZakatDataAccess",
+                                UserName = "System"
+                            });
+
                             return true;
                         }
                         catch (Exception ex)

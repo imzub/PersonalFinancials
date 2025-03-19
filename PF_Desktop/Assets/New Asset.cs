@@ -20,6 +20,7 @@ namespace PF_Desktop.Assets
         private readonly UserDataAccess _userDataAccess;
         private AssetDataAccess _assetDataAccess;
         private AssetHistoryDataAccess _assetHistoryDataAccess;
+        private EventLogDataAccess eventLogger = new EventLogDataAccess();
 
         public New_Asset()
         {
@@ -179,6 +180,15 @@ namespace PF_Desktop.Assets
                     // 🔹 Step 6: Show success message
                     MessageBox.Show(assetId > 0 ? "Asset updated successfully!" : "Asset saved successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     ClearForm(); // Clear form after successful operation
+
+                    // Log event
+                    eventLogger.LogEvent(new EventLogModel
+                    {
+                        EventType = assetId > 0 ? "Update" : "Insert",
+                        EventMessage = assetId > 0 ? "Asset updated successfully." : "Asset inserted successfully.",
+                        EventSource = "New_Asset",
+                        UserName = "System"
+                    });
                 }
                 else
                 {

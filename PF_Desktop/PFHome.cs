@@ -22,6 +22,7 @@ namespace PF_Desktop
 
         Calculations _calculations;
         EventLogDataAccess eventLogDataAccess =  new EventLogDataAccess();
+        ExceptionLogDataAccess exceptionLogDataAccess = new ExceptionLogDataAccess();
 
         public PFHome()
         {
@@ -83,13 +84,29 @@ namespace PF_Desktop
 
         private void LoadHome()
         {
-            this.MaximumSize = new Size(Screen.PrimaryScreen.WorkingArea.Width, Screen.PrimaryScreen.WorkingArea.Height);
-            Rectangle workingArea = Screen.PrimaryScreen.WorkingArea;
-            this.Size = new Size(workingArea.Width, workingArea.Height);
-            this.Location = new Point(workingArea.Left, workingArea.Top);
+            try
+            {
+                this.MaximumSize = new Size(Screen.PrimaryScreen.WorkingArea.Width, Screen.PrimaryScreen.WorkingArea.Height);
+                Rectangle workingArea = Screen.PrimaryScreen.WorkingArea;
+                this.Size = new Size(workingArea.Width, workingArea.Height);
+                this.Location = new Point(workingArea.Left, workingArea.Top);
 
-            //Load ZakatSummery
-            LoadZakatSummery();
+                //Load ZakatSummery
+                LoadZakatSummery();
+
+                eventLogDataAccess.LogEvent(new EventLogModel
+                {
+                    EventType = "Load",
+                    EventMessage = "Home loaded successfully.",
+                    EventSource = "PFHome",
+                    UserName = "System"
+                });
+            }
+            catch (Exception ex)
+            {
+                exceptionLogDataAccess.LogException(ex);
+                MessageBox.Show("An error occurred while loading the home screen. Please check the logs for more details.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         internal void LoadZakatSummery()
