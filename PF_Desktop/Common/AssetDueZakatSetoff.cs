@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using PersonalFinancials.DataAccess;
 using PF_ClassLibrary.DataAccess;
+using PersonalFinancials.Models;
 
 namespace PF_Desktop.Common
 {
