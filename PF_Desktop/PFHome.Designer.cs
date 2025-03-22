@@ -64,6 +64,7 @@
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.hmbtn_Wealth = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.home_statusStrip.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -137,26 +138,26 @@
             this.helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1213, 36);
+            this.menuStrip1.Size = new System.Drawing.Size(1739, 33);
             this.menuStrip1.TabIndex = 6;
             this.menuStrip1.Text = "menuStrip1";
             // 
             // homeToolStripMenuItem
             // 
             this.homeToolStripMenuItem.Name = "homeToolStripMenuItem";
-            this.homeToolStripMenuItem.Size = new System.Drawing.Size(77, 30);
+            this.homeToolStripMenuItem.Size = new System.Drawing.Size(77, 29);
             this.homeToolStripMenuItem.Text = "Home";
             // 
             // settingsToolStripMenuItem
             // 
             this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
-            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(92, 30);
+            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(92, 29);
             this.settingsToolStripMenuItem.Text = "Settings";
             // 
             // viewsToolStripMenuItem
             // 
             this.viewsToolStripMenuItem.Name = "viewsToolStripMenuItem";
-            this.viewsToolStripMenuItem.Size = new System.Drawing.Size(73, 30);
+            this.viewsToolStripMenuItem.Size = new System.Drawing.Size(73, 29);
             this.viewsToolStripMenuItem.Text = "Views";
             // 
             // helpToolStripMenuItem
@@ -164,7 +165,7 @@
             this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.applicationGuideToolStripMenuItem});
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
-            this.helpToolStripMenuItem.Size = new System.Drawing.Size(65, 30);
+            this.helpToolStripMenuItem.Size = new System.Drawing.Size(65, 29);
             this.helpToolStripMenuItem.Text = "Help";
             // 
             // applicationGuideToolStripMenuItem
@@ -183,7 +184,7 @@
             this.tssl_deficitZakat});
             this.home_statusStrip.Location = new System.Drawing.Point(0, 594);
             this.home_statusStrip.Name = "home_statusStrip";
-            this.home_statusStrip.Size = new System.Drawing.Size(1213, 22);
+            this.home_statusStrip.Size = new System.Drawing.Size(1739, 22);
             this.home_statusStrip.TabIndex = 7;
             this.home_statusStrip.Text = "statusStrip1";
             this.home_statusStrip.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.home_statusStrip_ItemClicked);
@@ -333,7 +334,7 @@
             // btn_assetDiversifyReport
             // 
             this.btn_assetDiversifyReport.BackColor = System.Drawing.Color.PowderBlue;
-            this.btn_assetDiversifyReport.Location = new System.Drawing.Point(6, 25);
+            this.btn_assetDiversifyReport.Location = new System.Drawing.Point(6, 34);
             this.btn_assetDiversifyReport.Name = "btn_assetDiversifyReport";
             this.btn_assetDiversifyReport.Size = new System.Drawing.Size(300, 42);
             this.btn_assetDiversifyReport.TabIndex = 24;
@@ -375,10 +376,11 @@
             // groupBox3
             // 
             this.groupBox3.BackColor = System.Drawing.Color.Lavender;
+            this.groupBox3.Controls.Add(this.hmbtn_Wealth);
             this.groupBox3.Controls.Add(this.btn_assetDiversifyReport);
             this.groupBox3.Location = new System.Drawing.Point(431, 57);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(312, 76);
+            this.groupBox3.Size = new System.Drawing.Size(312, 145);
             this.groupBox3.TabIndex = 28;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Reports";
@@ -387,7 +389,7 @@
             // 
             this.groupBox4.BackColor = System.Drawing.Color.Lavender;
             this.groupBox4.Controls.Add(this.btnTasks);
-            this.groupBox4.Location = new System.Drawing.Point(431, 139);
+            this.groupBox4.Location = new System.Drawing.Point(431, 208);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Size = new System.Drawing.Size(312, 76);
             this.groupBox4.TabIndex = 29;
@@ -398,7 +400,7 @@
             // 
             this.groupBox5.BackColor = System.Drawing.Color.Lavender;
             this.groupBox5.Controls.Add(this.btn_ExportImport);
-            this.groupBox5.Location = new System.Drawing.Point(431, 221);
+            this.groupBox5.Location = new System.Drawing.Point(431, 290);
             this.groupBox5.Name = "groupBox5";
             this.groupBox5.Size = new System.Drawing.Size(312, 76);
             this.groupBox5.TabIndex = 30;
@@ -419,12 +421,22 @@
             this.groupBox6.Text = "Inactive Options";
             this.groupBox6.Visible = false;
             // 
+            // hmbtn_Wealth
+            // 
+            this.hmbtn_Wealth.BackColor = System.Drawing.Color.PowderBlue;
+            this.hmbtn_Wealth.Location = new System.Drawing.Point(6, 91);
+            this.hmbtn_Wealth.Name = "hmbtn_Wealth";
+            this.hmbtn_Wealth.Size = new System.Drawing.Size(300, 42);
+            this.hmbtn_Wealth.TabIndex = 25;
+            this.hmbtn_Wealth.Text = "Wealth";
+            this.hmbtn_Wealth.UseVisualStyleBackColor = false;
+            // 
             // PFHome
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(1213, 616);
+            this.ClientSize = new System.Drawing.Size(1739, 616);
             this.Controls.Add(this.groupBox6);
             this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.groupBox4);
@@ -495,6 +507,7 @@
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.GroupBox groupBox5;
         private System.Windows.Forms.GroupBox groupBox6;
+        private System.Windows.Forms.Button hmbtn_Wealth;
     }
 }
 

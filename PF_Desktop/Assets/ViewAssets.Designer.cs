@@ -41,8 +41,8 @@
             // 
             this.dataGridViewAssets.AllowUserToAddRows = false;
             this.dataGridViewAssets.AllowUserToDeleteRows = false;
-            this.dataGridViewAssets.AllowUserToResizeColumns = false;
             this.dataGridViewAssets.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dataGridViewAssets.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
             dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -59,7 +59,7 @@
             this.dataGridViewAssets.RowHeadersWidth = 62;
             this.dataGridViewAssets.RowTemplate.Height = 28;
             this.dataGridViewAssets.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridViewAssets.Size = new System.Drawing.Size(912, 578);
+            this.dataGridViewAssets.Size = new System.Drawing.Size(1400, 586);
             this.dataGridViewAssets.TabIndex = 0;
             this.dataGridViewAssets.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewAssets_CellDoubleClick_1);
             // 
@@ -101,7 +101,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Info;
-            this.ClientSize = new System.Drawing.Size(936, 633);
+            this.ClientSize = new System.Drawing.Size(1422, 632);
             this.Controls.Add(this.comboBox3);
             this.Controls.Add(this.comboBox2);
             this.Controls.Add(this.comboBox1);

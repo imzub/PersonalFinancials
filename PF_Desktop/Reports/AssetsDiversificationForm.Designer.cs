@@ -47,7 +47,7 @@
             series2.Legend = "Legend1";
             series2.Name = "Series1";
             this.chartAssets.Series.Add(series2);
-            this.chartAssets.Size = new System.Drawing.Size(1122, 630);
+            this.chartAssets.Size = new System.Drawing.Size(1053, 630);
             this.chartAssets.TabIndex = 0;
             this.chartAssets.Text = "chartAsset";
             // 
@@ -56,14 +56,14 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Lavender;
-            this.ClientSize = new System.Drawing.Size(1125, 631);
+            this.ClientSize = new System.Drawing.Size(1056, 631);
             this.Controls.Add(this.chartAssets);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "AssetsDiversificationForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "AssetsDiversificationForm";
+            this.Text = "Assets Diversification";
             ((System.ComponentModel.ISupportInitialize)(this.chartAssets)).EndInit();
             this.ResumeLayout(false);
 

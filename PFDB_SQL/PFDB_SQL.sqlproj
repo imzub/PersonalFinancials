@@ -89,6 +89,7 @@
     <None Include="PFDB_SQL.publish.xml" />
     <None Include="Snapshots\PFDB_SQL_20250228_02-49-58.dacpac" />
     <None Include="PFDB_SQL_PROD.publish.xml" />
+    <None Include="PFDB_SQL_PROD2.publish.xml" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="PFDB_SQL.refactorlog" />

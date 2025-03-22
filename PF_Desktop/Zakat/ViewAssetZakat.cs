@@ -1,14 +1,11 @@
-﻿using PersonalFinancials.DataAccess;
+﻿using iText.Kernel.Pdf;
+using iText.Layout;
+using iText.Layout.Element;
+using PersonalFinancials.DataAccess;
 using PF_ClassLibrary.Model;
-using PF_Desktop.Assets;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO;
 using System.Windows.Forms;
 
 namespace PF_Desktop.Zakat
@@ -56,6 +53,69 @@ namespace PF_Desktop.Zakat
                 assetZakatForm.ShowDialog();  // Open as modal form
                 LoadAssetZakatData(); // Reload assets after closing the edit form
             }
+        }
+
+        public static void ExportDataGridViewToPDF(DataGridView dgv, string filePath)
+        {
+            try
+            {
+                using (FileStream stream = new FileStream(filePath, FileMode.Create, FileAccess.Write, FileShare.None))
+                using (PdfWriter writer = new PdfWriter(stream, new WriterProperties().SetCompressionLevel(CompressionConstants.NO_COMPRESSION)))
+                using (PdfDocument pdf = new PdfDocument(writer))
+                using (Document document = new Document(pdf))
+                {
+                    // Create table with column count matching DataGridView
+                    Table table = new Table(dgv.ColumnCount).UseAllAvailableWidth();
+
+                    // Add column headers
+                    foreach (DataGridViewColumn column in dgv.Columns)
+                    {
+                        table.AddHeaderCell(new Cell().Add(new Paragraph(column.HeaderText)
+    .SetFont(iText.Kernel.Font.PdfFontFactory.CreateFont(iText.IO.Font.Constants.StandardFonts.HELVETICA_BOLD))));
+
+                    }
+
+                    // Add row data
+                    foreach (DataGridViewRow row in dgv.Rows)
+                    {
+                        if (!row.IsNewRow) // Skip empty row
+                        {
+                            foreach (DataGridViewCell cell in row.Cells)
+                            {
+                                string cellValue = cell.Value?.ToString() ?? "";
+                                table.AddCell(new Cell().Add(new Paragraph(cellValue)));
+                            }
+                        }
+                    }
+
+                    document.Add(table);
+                }
+
+                MessageBox.Show("PDF saved successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        public static void PrintAssetZakatReport(DataGridView dgv)
+        {
+            using (SaveFileDialog sfd = new SaveFileDialog())
+            {
+                sfd.Filter = "PDF Files (*.pdf)|*.pdf";
+                sfd.FileName = "AssetZakatReport.pdf";
+
+                if (sfd.ShowDialog() == DialogResult.OK)
+                {
+                    ExportDataGridViewToPDF(dgv, sfd.FileName);
+                }
+            }
+        }
+
+        private void azbtn_Print_Click(object sender, EventArgs e)
+        {
+            PrintAssetZakatReport(vazdgv_ViewAssetZakat);
         }
     }
 }

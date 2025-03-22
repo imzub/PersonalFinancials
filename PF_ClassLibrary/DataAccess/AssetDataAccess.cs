@@ -123,7 +123,7 @@ namespace PersonalFinancials.DataAccess
                                 UserId = Convert.ToInt64(reader["userId"]),
                                 AssetName = reader["assetName"].ToString(),
                                 AssetDesc = reader["assetDesc"].ToString(),
-                                AssetUnits = Convert.ToInt64(reader["assetUnits"]),
+                                AssetUnits = Convert.ToDecimal(reader["assetUnits"]),
                                 IsAssetZakatApplicable = Convert.ToBoolean(reader["isAssetZakatApplicable"]),
                                 AssetBoughtDate = Convert.ToDateTime(reader["assetBoughtDate"]),
                                 AssetBoughtPrice = Convert.ToInt64(reader["assetBoughtPrice"]),

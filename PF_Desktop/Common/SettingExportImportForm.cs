@@ -193,7 +193,10 @@ namespace PF_Desktop.Common
             //_databaseExportImport.ImportFromCsv("tbl_AssetZakatFinYear", "C:/Users/zubai/Downloads/tbl_AssetZakatFinYear.csv");
             //_databaseExportImport.ImportFromCsv("tbl_ZakatDue", "C:/Users/zubai/Downloads/tbl_ZakatDue.csv");
             //_databaseExportImport.ImportAssetZakatFinYear("C:/Users/zubai/Downloads/tbl_AssetZakatFinYear.csv");
-            _databaseExportImport.ImportFromJson("tbl_ZakatDue", "C:/Users/zubai/Downloads/tbl_ZakatDue.json");
+            _databaseExportImport.ImportFromJson("tbl_AssetType", "C:/Users/zubai/Downloads/tbl_AssetType.json");
+            _databaseExportImport.ImportFromJson("tbl_Assets", "C:/Users/zubai/Downloads/tbl_Assets.json");
+            _databaseExportImport.ImportFromJson("tbl_Users", "C:/Users/zubai/Downloads/tbl_Users.json");
+            _databaseExportImport.ImportFromJson("tbl_ApplicationConfiguration", "C:/Users/zubai/Downloads/tbl_ApplicationConfiguration.json");
         }
     }
 }

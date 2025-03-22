@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.vazdgv_ViewAssetZakat = new System.Windows.Forms.DataGridView();
+            this.azbtn_Print = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.vazdgv_ViewAssetZakat)).BeginInit();
             this.SuspendLayout();
             // 
@@ -46,16 +47,27 @@
             this.vazdgv_ViewAssetZakat.RowHeadersWidth = 62;
             this.vazdgv_ViewAssetZakat.RowTemplate.Height = 28;
             this.vazdgv_ViewAssetZakat.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.vazdgv_ViewAssetZakat.Size = new System.Drawing.Size(1117, 560);
+            this.vazdgv_ViewAssetZakat.Size = new System.Drawing.Size(1300, 560);
             this.vazdgv_ViewAssetZakat.TabIndex = 0;
             this.vazdgv_ViewAssetZakat.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.vazdgv_ViewAssetZakat_CellDoubleClick);
+            // 
+            // azbtn_Print
+            // 
+            this.azbtn_Print.Location = new System.Drawing.Point(998, 12);
+            this.azbtn_Print.Name = "azbtn_Print";
+            this.azbtn_Print.Size = new System.Drawing.Size(114, 41);
+            this.azbtn_Print.TabIndex = 1;
+            this.azbtn_Print.Text = "Print";
+            this.azbtn_Print.UseVisualStyleBackColor = true;
+            this.azbtn_Print.Click += new System.EventHandler(this.azbtn_Print_Click);
             // 
             // ViewAssetZakat
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
-            this.ClientSize = new System.Drawing.Size(1152, 653);
+            this.ClientSize = new System.Drawing.Size(1327, 653);
+            this.Controls.Add(this.azbtn_Print);
             this.Controls.Add(this.vazdgv_ViewAssetZakat);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
@@ -71,5 +83,6 @@
         #endregion
 
         private System.Windows.Forms.DataGridView vazdgv_ViewAssetZakat;
+        private System.Windows.Forms.Button azbtn_Print;
     }
 }

@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Data;
+using System.Linq;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 using PersonalFinancials.DataAccess;
+using System.Drawing;
 
 namespace PF_Desktop.Reports
 {
@@ -27,30 +29,46 @@ namespace PF_Desktop.Reports
                 }
 
                 chartAssets.Series.Clear();
-                Series series = new Series("Assets");
-                series.ChartType = SeriesChartType.Pie; // 🔹 Pie Chart
-                series.IsValueShownAsLabel = true; // 🔹 Show values on chart
+                Series series = new Series("Assets")
+                {
+                    ChartType = SeriesChartType.Pie, // 🔹 Pie Chart
+                    IsValueShownAsLabel = true        // 🔹 Show labels on chart
+                };
                 chartAssets.Series.Add(series);
 
-                decimal totalValue = 0;
-                foreach (DataRow row in dt.Rows)
-                {
-                    totalValue += Convert.ToDecimal(row["TotalValue"]);
-                }
+                // 🔹 Calculate Total Asset Value
+                decimal totalValue = dt.AsEnumerable().Sum(row => row.Field<decimal>("TotalValue"));
 
+                // 🔹 Add data points to the chart
                 foreach (DataRow row in dt.Rows)
                 {
                     string assetName = row["AssetCategory"].ToString();
                     decimal assetValue = Convert.ToDecimal(row["TotalValue"]);
                     decimal percentage = (assetValue / totalValue) * 100;
 
-                    // 🔹 Add data to chart
-                    series.Points.AddXY(assetName, percentage);
-                    series.Points[series.Points.Count - 1].Label = $"{assetName}: {percentage:F2}%"; // Label Format
+                    DataPoint point = new DataPoint
+                    {
+                        YValues = new double[] { (double)assetValue }, // 🔹 Store actual value
+                        AxisLabel = assetName, // 🔹 Show asset name on Pie Chart
+                        Label = $"{assetName}\n{assetValue:C} ({percentage:F2}%)" // 🔹 Display value & percentage
+                    };
+
+                    series.Points.Add(point);
                 }
 
+                // 🔹 Update Chart Title
                 chartAssets.Titles.Clear();
-                chartAssets.Titles.Add("Assets Distribution in Percentage");
+                chartAssets.Titles.Add("Assets Distribution (Value & Percentage)");
+
+                // 🔹 Add Total Wealth Value as a Side Label
+                string todayDate = DateTime.Now.ToString("dd-MMM-yyyy");
+                Title totalWealthTitle = new Title($"Total Wealth: {totalValue:C} (As of {todayDate})")
+                {
+                    Docking = Docking.Bottom, // 🔹 Position the label below the chart
+                    Font = new Font("Arial", 10, FontStyle.Bold),
+                    ForeColor = Color.Green
+                };
+                chartAssets.Titles.Add(totalWealthTitle);
             }
             catch (Exception ex)
             {
@@ -81,31 +99,5 @@ namespace PF_Desktop.Reports
 
             return dt;
         }
-
-
-        //private DataTable GetAssetData()
-        //{
-        //    try
-        //    {
-        //        _assetDataAccess = new AssetDataAccess(); // Initialize Data Access
-
-        //        // Fetch asset category sums using stored procedure
-        //        DataTable dt = _assetDataAccess.GetAssetCategorySum();
-
-        //        // Validate if data is fetched
-        //        if (dt == null || dt.Rows.Count == 0)
-        //        {
-        //            MessageBox.Show("No asset data available.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        //            return new DataTable(); // Return empty DataTable if no data
-        //        }
-
-        //        return dt; // Return the fetched data
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        MessageBox.Show($"Error fetching asset data: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-        //        return new DataTable(); // Return empty DataTable in case of error
-        //    }
-        //}
     }
 }
