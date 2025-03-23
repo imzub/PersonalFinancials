@@ -5,6 +5,7 @@ using PersonalFinancials.DataAccess;
 using PF_ClassLibrary.Model;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.IO;
 using System.Windows.Forms;
 
@@ -18,19 +19,23 @@ namespace PF_Desktop.Zakat
             LoadAssetZakatData();
         }
 
+        private BindingSource bindingSource = new BindingSource();
+        private List<AssetZakatFinYear> allAssetsList = new List<AssetZakatFinYear>(); // Store original data
+
         private void LoadAssetZakatData()
         {
             try
             {
-                // Initialize Data Access
-                AssetZakatFinYearDataAccess dataAccess = new AssetZakatFinYearDataAccess();
-
                 // Fetch all asset zakat records
-                List<AssetZakatFinYear> assetZakatFinYears = dataAccess.GetAllAssetZakatFinYears();
+                AssetZakatFinYearDataAccess dataAccess = new AssetZakatFinYearDataAccess();
+                allAssetsList = dataAccess.GetAllAssetZakatFinYears(); // Store full data list
 
-                // Bind to DataGridView
-                vazdgv_ViewAssetZakat.DataSource = assetZakatFinYears;
-                vazdgv_ViewAssetZakat.Columns["AssetZakatFinYearId"].Visible = true; // Show/Hide ID column
+                // Bind to DataGridView using BindingSource
+                bindingSource.DataSource = new List<AssetZakatFinYear>(allAssetsList);
+                vazdgv_ViewAssetZakat.DataSource = bindingSource;
+
+                // Configure columns
+                vazdgv_ViewAssetZakat.Columns["AssetZakatFinYearId"].Visible = false;
                 vazdgv_ViewAssetZakat.Columns["AssetId"].HeaderText = "Asset ID";
                 vazdgv_ViewAssetZakat.Columns["AssetName"].HeaderText = "Asset Name";
                 vazdgv_ViewAssetZakat.Columns["AssetZakatFinYearStartDate"].HeaderText = "Start Date";
@@ -41,6 +46,28 @@ namespace PF_Desktop.Zakat
             catch (Exception ex)
             {
                 MessageBox.Show("Error loading Asset Zakat Financial Years: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void aztb_SearchAssetZakat_TextChanged(object sender, EventArgs e)
+        {
+            string searchText = aztb_SearchAssetZakat.Text.Trim().ToLower();
+
+            if (string.IsNullOrEmpty(searchText))
+            {
+                // Restore full data when search is cleared
+                bindingSource.DataSource = new List<AssetZakatFinYear>(allAssetsList);
+            }
+            else
+            {
+                // Search dynamically in all relevant fields
+                bindingSource.DataSource = allAssetsList.FindAll(asset =>
+                    asset.AssetName.ToLower().Contains(searchText) ||
+                    asset.AssetId.ToString().Contains(searchText) ||
+                    asset.AssetZakatFinYearStartDate.ToString("yyyy-MM-dd").Contains(searchText) ||
+                    asset.AssetZakatFinYearEndDate.ToString("yyyy-MM-dd").Contains(searchText) ||
+                    (asset.IsAssetZakatFinYearActive ? "active" : "inactive").Contains(searchText)
+                );
             }
         }
 
@@ -116,6 +143,6 @@ namespace PF_Desktop.Zakat
         private void azbtn_Print_Click(object sender, EventArgs e)
         {
             PrintAssetZakatReport(vazdgv_ViewAssetZakat);
-        }
+        }       
     }
 }

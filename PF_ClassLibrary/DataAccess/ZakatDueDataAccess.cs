@@ -101,12 +101,18 @@ namespace PersonalFinancials.DataAccess
                 try
                 {
                     // 🔹 Step 1: Get all expired assets
-                    string query = @"
-                SELECT azfy.assetZakatFinYearId, azfy.assetId, a.assetUnits, atype.assetTypeCurrentValuePerUnit
-                FROM tbl_AssetZakatFinYear azfy
-                INNER JOIN tbl_Assets a ON azfy.assetId = a.assetId
-                INNER JOIN tbl_AssetType atype ON a.assetTypeId = atype.assetTypeId
-                WHERE azfy.assetZakatFinYearEndDate < GETDATE()";
+                    string query = @"SELECT 
+                                    azfy.assetZakatFinYearId, 
+                                    azfy.assetId, 
+                                    a.assetUnits, 
+                                    atype.assetTypeCurrentValuePerUnit
+                                FROM tbl_AssetZakatFinYear azfy
+                                INNER JOIN tbl_Assets a ON azfy.assetId = a.assetId
+                                INNER JOIN tbl_AssetType atype ON a.assetTypeId = atype.assetTypeId
+                                WHERE 
+                                    azfy.assetZakatFinYearEndDate < GETDATE()
+                                    AND a.isAssetActive = 1 
+                                    AND a.isAssetZakatApplicable = 1";
 
                     DataTable dt = ExecuteQuery(query, conn, transaction);
 

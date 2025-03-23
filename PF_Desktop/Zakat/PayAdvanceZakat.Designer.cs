@@ -84,6 +84,7 @@
             // 
             // paz_AdvZakatIn
             // 
+            this.paz_AdvZakatIn.ForeColor = System.Drawing.Color.Green;
             this.paz_AdvZakatIn.Location = new System.Drawing.Point(105, 6);
             this.paz_AdvZakatIn.Name = "paz_AdvZakatIn";
             this.paz_AdvZakatIn.Size = new System.Drawing.Size(274, 26);
