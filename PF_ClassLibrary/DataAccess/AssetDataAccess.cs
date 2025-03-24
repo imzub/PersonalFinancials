@@ -61,40 +61,67 @@ namespace PersonalFinancials.DataAccess
         {
             bool isUpdated = false;
             string query = @"
-                UPDATE tbl_Assets 
-                SET assetTypeId = @assetTypeId, 
-                    userId = @userId, 
-                    assetName = @assetName, 
-                    assetDesc = @assetDesc, 
-                    assetUnits = @assetUnits, 
-                    isAssetZakatApplicable = @isAssetZakatApplicable, 
-                    assetBoughtDate = @assetBoughtDate, 
-                    assetBoughtPrice = @assetBoughtPrice, 
-                    assetTimeStamp = @assetTimeStamp, 
-                    isAssetActive = @isAssetActive,
-                    assetZakatApplicableFromDate = @assetZakatApplicableFromDate
-                WHERE assetId = @assetId";
+                            UPDATE tbl_Assets 
+                            SET assetTypeId = @assetTypeId, 
+                                userId = @userId, 
+                                assetName = @assetName, 
+                                assetDesc = @assetDesc, 
+                                assetUnits = @assetUnits, 
+                                isAssetZakatApplicable = @isAssetZakatApplicable, 
+                                assetBoughtDate = @assetBoughtDate, 
+                                assetBoughtPrice = @assetBoughtPrice, 
+                                assetTimeStamp = @assetTimeStamp, 
+                                isAssetActive = @isAssetActive,
+                                assetZakatApplicableFromDate = @assetZakatApplicableFromDate
+                            WHERE assetId = @assetId";
 
             using (SqlConnection conn = new SqlConnection(ConnectionString))
             {
-                using (SqlCommand cmd = new SqlCommand(query, conn))
+                conn.Open();
+                using (SqlTransaction sqlTransaction = conn.BeginTransaction())
                 {
-                    cmd.Parameters.AddWithValue("@assetId", asset.AssetId);
-                    cmd.Parameters.AddWithValue("@assetTypeId", asset.AssetTypeId);
-                    cmd.Parameters.AddWithValue("@userId", asset.UserId);
-                    cmd.Parameters.AddWithValue("@assetName", asset.AssetName);
-                    cmd.Parameters.AddWithValue("@assetDesc", asset.AssetDesc);
-                    cmd.Parameters.AddWithValue("@assetUnits", asset.AssetUnits);
-                    cmd.Parameters.AddWithValue("@isAssetZakatApplicable", asset.IsAssetZakatApplicable);
-                    cmd.Parameters.AddWithValue("@assetBoughtDate", asset.AssetBoughtDate);
-                    cmd.Parameters.AddWithValue("@assetBoughtPrice", asset.AssetBoughtPrice);
-                    cmd.Parameters.AddWithValue("@assetTimeStamp", asset.AssetTimeStamp);
-                    cmd.Parameters.AddWithValue("@isAssetActive", asset.IsAssetActive);
-                    cmd.Parameters.AddWithValue("@assetZakatApplicableFromDate", asset.ZakatApplicableFromDate);
+                    try
+                    {
+                        using (SqlCommand cmd = new SqlCommand(query, conn, sqlTransaction))
+                        {
+                            cmd.Parameters.AddWithValue("@assetId", asset.AssetId);
+                            cmd.Parameters.AddWithValue("@assetTypeId", asset.AssetTypeId);
+                            cmd.Parameters.AddWithValue("@userId", asset.UserId);
+                            cmd.Parameters.AddWithValue("@assetName", (object)asset.AssetName ?? DBNull.Value);
+                            cmd.Parameters.AddWithValue("@assetDesc", (object)asset.AssetDesc ?? DBNull.Value);
+                            cmd.Parameters.AddWithValue("@assetUnits", asset.AssetUnits);
+                            cmd.Parameters.AddWithValue("@isAssetZakatApplicable", asset.IsAssetZakatApplicable ? 1 : 0);
+                            cmd.Parameters.AddWithValue("@assetBoughtDate", asset.AssetBoughtDate);
+                            cmd.Parameters.AddWithValue("@assetBoughtPrice", asset.AssetBoughtPrice);
+                            cmd.Parameters.AddWithValue("@assetTimeStamp", asset.AssetTimeStamp);
+                            cmd.Parameters.AddWithValue("@isAssetActive", asset.IsAssetActive ? 1 : 0);
+                            cmd.Parameters.AddWithValue("@assetZakatApplicableFromDate", asset.ZakatApplicableFromDate);
 
-                    conn.Open();
-                    int rowsAffected = cmd.ExecuteNonQuery();
-                    isUpdated = (rowsAffected > 0);
+                            int rowsAffected = cmd.ExecuteNonQuery();
+                            isUpdated = (rowsAffected > 0);
+
+                            if (isUpdated)
+                            {
+                                AssetZakatFinYearDataAccess assetZakatFinYearDataAccess = new AssetZakatFinYearDataAccess();
+                                isUpdated = assetZakatFinYearDataAccess.UpdateAssetStatus(asset.AssetId, asset.IsAssetActive, sqlTransaction);
+                            }
+                        }
+
+                        if (isUpdated)
+                        {
+                            sqlTransaction.Commit();
+                        }
+                        else
+                        {
+                            sqlTransaction.Rollback();
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        sqlTransaction.Rollback();
+                        Console.WriteLine($"Error updating asset: {ex.Message}");
+                        return false;
+                    }
                 }
             }
             return isUpdated;

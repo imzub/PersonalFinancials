@@ -191,9 +191,35 @@ namespace PersonalFinancials.DataAccess
                     AssetName = row["assetName"].ToString(),
                     ZakatApplicableFromDate = Convert.ToDateTime(row["assetZakatApplicableFromDate"])
                     // Add other required columns here
-                });                                                                                                                                                                             
+                });
             }
             return assets;
         }
+
+        public bool UpdateAssetStatus(long assetId, bool isActive, SqlTransaction sqlTransaction)
+        {
+            string query = @"
+        UPDATE tbl_AssetZakatFinYear 
+        SET IsAssetZakatFinYearActive = @IsActive
+        WHERE AssetId = @AssetId";
+
+            try
+            {
+                using (SqlCommand cmd = new SqlCommand(query, sqlTransaction.Connection, sqlTransaction))
+                {
+                    cmd.Parameters.AddWithValue("@AssetId", assetId);
+                    cmd.Parameters.AddWithValue("@IsActive", isActive ? 1 : 0);
+
+                    return cmd.ExecuteNonQuery() > 0;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error updating asset status: {ex.Message}");
+                return false;
+            }
+        }
+
+
     }
 }

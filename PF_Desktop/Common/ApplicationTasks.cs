@@ -5,6 +5,7 @@ using PersonalFinancials.DataAccess;
 using System;
 using System.Windows.Forms;
 using PersonalFinancials.Models;
+using System.Threading.Tasks;
 
 namespace PF_Desktop.Common
 {
@@ -13,9 +14,9 @@ namespace PF_Desktop.Common
         Tasks _tasks;
         ApplicationConfigurationDataAccess _applicationConfigurationDataAccess;
         ZakatDueDataAccess _zakatDueDataAccess;
-        MetalServices metalService;
-        MutualFundService mutualFundService;
-        StockService stockService;
+        MetalServices metalService = new MetalServices();
+        MutualFundService mutualFundService = new MutualFundService();
+        StockService stockService = new StockService();
         EventLogDataAccess eventLogger = new EventLogDataAccess();
 
         public ApplicationTasks()
@@ -152,7 +153,6 @@ namespace PF_Desktop.Common
         {
             try
             {
-                metalService = new MetalServices();
                 await metalService.UpdateMetalRatesAsync();
                 MessageBox.Show("Metal rates updated successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 UpdateKeyAndLableLastTimeUpdated(AppKey.KeyUpdateMetalRate);
@@ -184,7 +184,6 @@ namespace PF_Desktop.Common
         {
             try
             {
-                StockService stockService = new StockService();
                 await stockService.UpdateCIL();
                 MessageBox.Show("Stocks rates updated successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 UpdateKeyAndLableLastTimeUpdated(AppKey.KeyUpdateStockRate);
@@ -207,7 +206,6 @@ namespace PF_Desktop.Common
         {
             try
             {
-                mutualFundService = new MutualFundService();
                 await mutualFundService.UpdateMFRates();
                 MessageBox.Show("MF rates updated successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 UpdateKeyAndLableLastTimeUpdated(AppKey.KeyUpdateMFRate);
@@ -228,14 +226,11 @@ namespace PF_Desktop.Common
 
         private async void UpdateAllAssetTypeRates()
         {
-            metalService = new MetalServices();
-            await metalService.UpdateMetalRatesAsync();
-
-            mutualFundService = new MutualFundService();
-            await mutualFundService.UpdateMFRates();
-
-            stockService = new StockService();
-            await stockService.UpdateCIL();
+            await Task.WhenAll(
+                metalService.UpdateMetalRatesAsync(),
+                mutualFundService.UpdateMFRates(),
+                stockService.UpdateCIL()
+                );
         }
     }
 }
